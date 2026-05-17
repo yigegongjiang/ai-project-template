@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { chmod, mkdir, rename, unlink, writeFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 
+import { downloadWithProgress } from "./download.ts";
 import pkg from "../package.json" with { type: "json" };
 
 // `build.ts` injects BUILD_* via `--define` at compile time.
@@ -32,12 +33,6 @@ function detectAsset(): string {
   return `${NAME}-darwin-${a}`;
 }
 
-async function fetchOk(url: string): Promise<Response> {
-  const res = await fetch(url, { redirect: "follow" });
-  if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
-  return res;
-}
-
 async function update(): Promise<number> {
   const assetName = detectAsset();
   const base = `https://github.com/${REPO}/releases/latest/download`;
@@ -57,8 +52,7 @@ async function update(): Promise<number> {
   console.log(`    before: ${NAME} ${VERSION}`);
 
   console.log(`==> Downloading ${assetUrl}`);
-  const assetRes = await fetchOk(assetUrl);
-  const assetBytes = new Uint8Array(await assetRes.arrayBuffer());
+  const assetBytes = await downloadWithProgress(assetUrl);
 
   // Verify checksum if checksums.txt exists for this release.
   try {
@@ -93,6 +87,15 @@ async function update(): Promise<number> {
   }
 
   console.log(`==> Updated: ${dest}`);
+  try {
+    const r = Bun.spawnSync([dest, "version"]);
+    if (r.success && r.stdout) {
+      const after = new TextDecoder().decode(r.stdout).trim();
+      if (after) console.log(`    after:  ${after}`);
+    }
+  } catch {
+    // best-effort; if the new binary cannot exec, the replace itself already succeeded.
+  }
   return 0;
 }
 

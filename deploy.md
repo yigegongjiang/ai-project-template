@@ -21,19 +21,23 @@ bun run build
 ```bash
 git add .
 git commit -m "release: vX.Y.Z"
-git tag vX.Y.Z
+git tag -a vX.Y.Z -m "vX.Y.Z"
 git push origin <branch> vX.Y.Z
 ```
+
+> 用 annotated tag (`-a -m`) 而非 lightweight: 兼容 `tag.gpgsign=true` 配置 (开启时 lightweight tag 会被强制升级为 signed 但缺 message → fail).
 
 ## 4. amend 修上版 bug
 
 AI 自主识别 "刚发版的 bug, 不发新版" 场景 (信号: 反馈指向刚 push 的 tag / 改动极小仅修缺陷 / 语气暗示是上版延续如 "刚那个" "刚发的"). 此时:
 
+> **commit + tag 必须同步更新**: amend 后 commit hash 变了, 远程 tag 仍指向旧 hash → Release artifact 与 main HEAD 分离. 只 force push commit 不够, 必须删远程 tag 后重打, 否则 Actions 不会重跑构建.
+
 ```bash
 git commit -a --amend --no-edit
 git tag -d vX.Y.Z
 git push origin :refs/tags/vX.Y.Z
-git tag vX.Y.Z
+git tag -a vX.Y.Z -m "vX.Y.Z"
 git push --force-with-lease origin <branch>
 git push origin vX.Y.Z
 ```

@@ -2,6 +2,14 @@
 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) + [SemVer](https://semver.org/).
 
+## [0.2.1] - 2026-05-17
+
+### Changed
+
+- `update` 子命令下载时显示进度条 (TTY 下实时更新, 非 TTY 输出累计字节数)
+- `update` 完成后追加打印 `after:` 版本行 (与 `before:` 对齐, 直观看到升级前后版本)
+- 下载逻辑抽离至独立模块 `src/download.ts`, 与命令分发解耦
+
 ## [0.2.0] - 2026-05-17
 
 ### Added
@@ -17,5 +25,6 @@
 - tag 触发 Actions 自动发布 (含 SHA256 checksums)
 - `install.sh` 一键安装
 
+[0.2.1]: https://github.com/yigegongjiang/cli-template/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/yigegongjiang/cli-template/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/yigegongjiang/cli-template/releases/tag/v0.1.0
