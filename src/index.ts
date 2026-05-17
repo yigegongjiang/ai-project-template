@@ -20,7 +20,8 @@ Commands:
   (none)                  Print "Hello, world!"
   help, --help, -h        Show this help message
   version, --version, -v  Show version information
-  update, upgrade         Download the latest release and replace this binary`;
+  update, upgrade         Download the latest release and replace this binary
+  uninstall               Remove this binary from disk`;
 
 function detectAsset(): string {
   if (process.platform !== "darwin") {
@@ -95,6 +96,24 @@ async function update(): Promise<number> {
   return 0;
 }
 
+async function uninstall(): Promise<number> {
+  const dest = process.execPath;
+  if (basename(dest) !== NAME) {
+    throw new Error(
+      `refusing to uninstall: current executable is "${basename(dest)}", expected "${NAME}". ` +
+        `uninstall only works on the installed binary, not when running from source via bun.`,
+    );
+  }
+
+  console.log(`==> Uninstalling ${NAME}`);
+  console.log(`    target: ${dest}`);
+
+  await unlink(dest);
+
+  console.log(`==> Removed: ${dest}`);
+  return 0;
+}
+
 async function main(args: readonly string[]): Promise<number> {
   const cmd = args[0];
   switch (cmd) {
@@ -118,6 +137,14 @@ async function main(args: readonly string[]): Promise<number> {
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         console.error(`error: update failed: ${msg}`);
+        return 1;
+      }
+    case "uninstall":
+      try {
+        return await uninstall();
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error(`error: uninstall failed: ${msg}`);
         return 1;
       }
     default:

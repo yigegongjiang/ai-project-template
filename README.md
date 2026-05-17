@@ -25,7 +25,7 @@ bun run build          # 编译两个 macOS 架构 → dist/
 bun run typecheck
 ```
 
-子命令：`help` / `-h` / `--help`，`version` / `-v` / `--version`，`update` / `upgrade`。
+子命令：`help` / `-h` / `--help`，`version` / `-v` / `--version`，`update` / `upgrade`，`uninstall`。
 
 ## 发布
 

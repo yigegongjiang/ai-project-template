@@ -2,6 +2,8 @@
 
 Bun 单文件可执行 CLI 模板 (仅 macOS). 改完代码 → 在 `CHANGELOG.md` 顶部新增版本段 → 按 [deploy.md](./deploy.md) 发布.
 
+非必要，不用在反问用户，直接勇敢的自行做决策和执行，比如 deploy、技术抉择等。
+
 `package.json#version` 经 `build.ts` 注入二进制, 必须与 tag 一致 (Actions 会做一致性校验, 不一致直接 fail).
 
 ## 派生新项目必改字段
