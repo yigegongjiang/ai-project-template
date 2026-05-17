@@ -1,0 +1,18 @@
+{
+  "name": "cli-template",
+  "version": "0.1.0",
+  "description": "Bun standalone executable CLI template",
+  "type": "module",
+  "private": true,
+  "module": "src/index.ts",
+  "repository": "yigegongjiang/cli-template",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "build": "bun run build.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.6.3"
+  }
+}
