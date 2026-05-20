@@ -6,9 +6,8 @@
 
 ### Changed
 
-- `update` 子命令下载时显示进度条 (TTY 下实时更新, 非 TTY 输出累计字节数)
-- `update` 完成后追加打印 `after:` 版本行 (与 `before:` 对齐, 直观看到升级前后版本)
-- 下载逻辑抽离至独立模块 `src/download.ts`, 与命令分发解耦
+- `update` 下载显示进度条 (TTY 实时更新, 非 TTY 累计字节)
+- `update` 完成追加打印 `after:` 版本行, 与 `before:` 对齐
 
 ## [0.2.0] - 2026-05-17
 

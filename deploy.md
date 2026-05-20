@@ -2,6 +2,13 @@
 
 AI 改完代码主动执行. push `v*` tag 触发 Actions 构建发布.
 
+## TL;DR
+
+1. `bun run typecheck && bun run build` 验证
+2. `CHANGELOG.md` 写新版段 + `package.json#version` 同步 (与 tag 一致)
+3. commit + annotated tag (`-a -m`) + push branch + tag
+4. 上版 bug → amend + 删远程 tag + 重打 + force push
+
 ## 1. 验证
 
 ```bash
