@@ -1,16 +1,16 @@
 # AGENTS
 
-Bun 单文件可执行 CLI 模板 (仅 macOS). 工程总览 → [README.md](./README.md); 发布流程 → [deploy.md](./deploy.md).
+Bun single-file executable CLI template (macOS only). Project overview → [README.md](./README.md); release flow → [deploy.md](./deploy.md).
 
-## 工作模式 (AI-only)
+## Workflow (AI-only)
 
-- 代码 / 测试 / 构建 / 部署 / 发布 全部由 Claude Code 或 Codex 执行
-- 设计决策 (架构 / 选型 / 命名 / 依赖) 以 AI 判断为准, MUST NOT 强行套人类惯例
-- 非必要 MUST NOT 反问, 直接决策执行 (deploy / 技术抉择 / 文档同步 / 版本号 / changelog)
-- 用户角色 = 触发者 + 验收者; MUST NOT 拉人类进设计回路
+- Code / test / build / deploy / release are all executed by Claude Code or Codex
+- Design decisions (architecture / selection / naming / dependencies) follow AI judgment; MUST NOT force human conventions
+- MUST NOT ask back unless necessary; decide and execute directly (deploy / technical choices / doc sync / version number / changelog)
+- User role = online acceptance; MUST NOT pull humans into the design loop
 
-## 文档约束
+## Doc constraints
 
-- 全部文档 (README / CHANGELOG / deploy / AGENTS / 注释) MUST 简洁精炼, 重点突出, 零冗余
-- 写法规范 → [llm-doc-style.md](./llm-doc-style.md); 审稿时 MUST 对照"反模式"段
-- 能一行不写两行, 能列表不写段落; 宁可信息密度过载, MUST NOT 废话填充
+- All docs (README / CHANGELOG / deploy / AGENTS / comments) MUST be concise, focused, zero redundancy
+- Style spec → [llm-doc-style.md](./llm-doc-style.md); when reviewing, MUST check against the "Anti-patterns" section
+- One line over two, a list over a paragraph; over-dense beats filler — MUST NOT pad with fluff

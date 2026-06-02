@@ -1,15 +1,15 @@
-# 部署流程
+# Release flow
 
-AI 改完代码主动执行. push `v*` tag 触发 Actions 构建发布.
+AI runs this on its own after finishing code changes. Pushing a `v*` tag triggers the Actions build + publish.
 
 ## TL;DR
 
-1. `bun run typecheck && bun run build` 验证
-2. `CHANGELOG.md` 写新版段 + `package.json#version` 同步 (与 tag 一致)
+1. `bun run typecheck && bun run build` to verify
+2. Write a new version section in `CHANGELOG.md` + mirror it into `CHANGELOG` (add technical sub-items) + sync `package.json#version` (matching the tag)
 3. commit + annotated tag (`-a -m`) + push branch + tag
-4. 上版 bug → amend + 删远程 tag + 重打 + force push
+4. Bug in the released version → amend + delete remote tag + re-tag + force push
 
-## 1. 验证
+## 1. Verify
 
 ```bash
 bun run typecheck
@@ -17,13 +17,13 @@ bun run build
 ./dist/cli-template-darwin-arm64 version
 ```
 
-## 2. 写版本
+## 2. Write the version
 
-- 版本号: 默认递增 PATCH (第三位); 新功能 → MINOR; 不兼容改动 → MAJOR.
-- `CHANGELOG.md` 顶部新增 `## [X.Y.Z] - YYYY-MM-DD` 段并列改动, 底部补 `[X.Y.Z]:` 对比链接. CHANGELOG 只写面向用户的精简摘要; commit 详情由 Actions `generate_release_notes` 自动汇总到 Release.
-- `package.json#version` 与 tag 一致 (tag 含 `v`, version 不含, 经 `build.ts` 注入二进制). Actions 第一步会校验, 不一致直接 fail.
+- Version number: bump PATCH (third digit) by default; new feature → MINOR; breaking change → MAJOR.
+- Add a `## [X.Y.Z] - YYYY-MM-DD` section at the top of `CHANGELOG.md` (+ a `[X.Y.Z]:` compare link at the bottom), then mirror that section into `CHANGELOG` with one technical sub-item per entry — both files move together → [llm-doc-style.md](./llm-doc-style.md). The user-facing summary stays concise; commit details are aggregated into the Release automatically by the Actions `generate_release_notes`.
+- `package.json#version` must match the tag (tag has the `v`, version does not; injected into the binary by `build.ts`). The first Actions step validates this and fails on mismatch.
 
-## 3. 发布
+## 3. Publish
 
 ```bash
 git add .
@@ -32,13 +32,13 @@ git tag -a vX.Y.Z -m "vX.Y.Z"
 git push origin <branch> vX.Y.Z
 ```
 
-> 用 annotated tag (`-a -m`) 而非 lightweight: 兼容 `tag.gpgsign=true` 配置 (开启时 lightweight tag 会被强制升级为 signed 但缺 message → fail).
+> Use an annotated tag (`-a -m`) rather than a lightweight one: this is compatible with the `tag.gpgsign=true` config (when enabled, a lightweight tag is force-upgraded to signed but lacks a message → fail).
 
-## 4. amend 修上版 bug
+## 4. amend to fix a bug in the released version
 
-AI 自主识别 "刚发版的 bug, 不发新版" 场景 (信号: 反馈指向刚 push 的 tag / 改动极小仅修缺陷 / 语气暗示是上版延续如 "刚那个" "刚发的"). 此时:
+The AI autonomously detects the "bug in the just-released version, don't ship a new version" scenario (signals: feedback points at the just-pushed tag / change is tiny and only fixes a defect / tone implies a continuation of the last version, e.g. "that one just now", "the one just shipped"). In that case:
 
-> **commit + tag 必须同步更新**: amend 后 commit hash 变了, 远程 tag 仍指向旧 hash → Release artifact 与 main HEAD 分离. 只 force push commit 不够, 必须删远程 tag 后重打, 否则 Actions 不会重跑构建.
+> **commit + tag must be updated together**: after amend the commit hash changes, but the remote tag still points to the old hash → the Release artifact diverges from main HEAD. Force-pushing the commit alone is not enough; the remote tag must be deleted and re-created, otherwise Actions won't re-run the build.
 
 ```bash
 git commit -a --amend --no-edit

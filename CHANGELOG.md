@@ -6,23 +6,23 @@
 
 ### Changed
 
-- `update` 下载显示进度条 (TTY 实时更新, 非 TTY 累计字节)
-- `update` 完成追加打印 `after:` 版本行, 与 `before:` 对齐
+- `update` 下载时显示进度条
+- `update` 完成后打印更新前后的版本
 
 ## [0.2.0] - 2026-05-17
 
 ### Added
 
-- 子命令 `uninstall`: 删除当前安装的二进制 (与 `update` 对称, 仅编译后二进制可用)
+- 新增 `uninstall` 子命令: 卸载已安装的二进制 (仅编译后二进制可用)
 
 ## [0.1.0] - 2026-05-17
 
 ### Added
 
 - 子命令 `help` / `version` / `update`
-- macOS x64 + arm64 双架构编译
-- tag 触发 Actions 自动发布 (含 SHA256 checksums)
+- 支持 macOS x64 / arm64
 - `install.sh` 一键安装
+- 自动发布, 产物附 SHA256 校验和
 
 [0.2.1]: https://github.com/yigegongjiang/cli-template/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/yigegongjiang/cli-template/compare/v0.1.0...v0.2.0

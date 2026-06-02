@@ -1,34 +1,34 @@
 # cli-template
 
-Bun 单文件可执行 CLI 模板 (仅 macOS). 打 tag → Actions 自动构建 + 发 Release; `install.sh` 一键装 / `update` 子命令自更新.
+Bun single-file executable CLI template (macOS only). Push a tag → Actions auto-builds + publishes a Release; `install.sh` for one-shot install / `update` subcommand for self-update.
 
-## 安装
+## Install
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/yigegongjiang/cli-template/main/install.sh | bash
 ```
 
-默认装到 `$HOME/.local/bin`. 可用 `VERSION` / `INSTALL_DIR` / `REPO` 覆写.
+Installs to `$HOME/.local/bin` by default. Override with `VERSION` / `INSTALL_DIR` / `REPO`.
 
-## 子命令
+## Subcommands
 
 <!-- prettier-ignore -->
-| 命令 | 别名 | 说明 |
+| Command | Alias | Description |
 |---|---|---|
-| `help` | `-h` / `--help` | 用法 |
-| `version` | `-v` / `--version` | 版本 |
-| `update` | `upgrade` | 自更新 (仅编译后二进制) |
-| `uninstall` | — | 卸载 (仅编译后二进制) |
+| `help` | `-h` / `--help` | Usage |
+| `version` | `-v` / `--version` | Version |
+| `update` | `upgrade` | Self-update (compiled binary only) |
+| `uninstall` | — | Uninstall (compiled binary only) |
 
-## 开发
+## Development
 
 ```bash
 bun install
-bun run start          # 源码运行
-bun run build          # 编译 x64 + arm64 → dist/
+bun run start          # run from source
+bun run build          # compile x64 + arm64 → dist/
 bun run typecheck
 ```
 
-## 发布
+## Release
 
-推 `v*` tag 触发 `.github/workflows/release.yml`. 步骤 → [deploy.md](./deploy.md).
+Pushing a `v*` tag triggers `.github/workflows/release.yml`. Steps → [deploy.md](./deploy.md).

@@ -1,0 +1,36 @@
+# Changelog (developer)
+
+面向开发者，镜像 [CHANGELOG.md](./CHANGELOG.md) 每条变更并补技术细节。规则见 [llm-doc-style.md](./llm-doc-style.md)。
+
+## [0.2.1] - 2026-05-17
+
+### Changed
+
+- `update` 下载时显示进度条
+  - 新增 `src/download.ts` `downloadWithProgress()`: 流式 `ReadableStream.getReader()` 累积分块, TTY 下 `\r` 重绘 + 100ms 节流, 非 TTY 降级为末尾单行; `fetchOk` 由 `index.ts` 迁出至此
+- `update` 完成后打印更新前后的版本
+  - `update()` 下载前打印 before; 替换后 `Bun.spawnSync([dest, "version"])` 取 after, best-effort (新二进制无法 exec 不影响已完成的替换)
+
+## [0.2.0] - 2026-05-17
+
+### Added
+
+- 新增 `uninstall` 子命令: 卸载已安装的二进制 (仅编译后二进制可用)
+  - `uninstall()`: `process.execPath` 定位自身, `basename(dest) !== NAME` 守卫拒绝源码 (bun run) 运行时卸载, `unlink` 删除; `main()` switch 增 `uninstall` case
+
+## [0.1.0] - 2026-05-17
+
+### Added
+
+- 子命令 `help` / `version` / `update`
+  - `src/index.ts` `main()` switch 路由各子命令; `update()` = 下载 + SHA256 校验 + `rename` 原子替换 + `chmod`; `BUILD_NAME`/`BUILD_VERSION`/`BUILD_REPO` 经 `build.ts` `--define` 编译期注入
+- 支持 macOS x64 / arm64
+  - `detectAsset()` 按 `process.platform` / `process.arch` 选产物名 (非 darwin 抛错); `build.ts` `Bun.build({ compile })` 交叉编译 `darwin-x64` / `darwin-arm64`, minify + linked sourcemap
+- `install.sh` 一键安装
+  - `install.sh`: `REPO`/`VERSION`/`INSTALL_DIR`/`BIN_NAME` 环境变量可配; 检测 OS+arch → 下载产物 → `shasum` 比对 `checksums.txt` → `mktemp` + `trap` 清理 → `chmod +x` + `mv -f` 装入 `~/.local/bin`; PATH 缺失则提示
+- 自动发布, 产物附 SHA256 校验和
+  - `.github/workflows/release.yml`: `v*` tag 触发 → 校验 tag 与 `package.json#version` 一致 → typecheck + build → `sha256sum` 生成 `checksums.txt` → `softprops/action-gh-release` (`generate_release_notes`) 发布 `dist/*`
+
+[0.2.1]: https://github.com/yigegongjiang/cli-template/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/yigegongjiang/cli-template/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/yigegongjiang/cli-template/releases/tag/v0.1.0
