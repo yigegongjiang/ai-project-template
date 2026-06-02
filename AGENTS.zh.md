@@ -1,6 +1,6 @@
 # AGENTS
 
-Bun 单文件可执行 CLI 模板 (仅 macOS). 工程总览 → [README.md](./README.md); 发布流程 → [deploy.md](./deploy.md).
+Bun 单文件可执行 CLI 模板 (仅 macOS). 工程总览 → [README.md](./README.md); 发布流程 → [deploy.md](./deploy.md); 文档写法 → [llm-doc-style.md](./llm-doc-style.md).
 
 ## 工作模式 (AI-only)
 

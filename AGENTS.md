@@ -1,6 +1,6 @@
 # AGENTS
 
-Bun single-file executable CLI template (macOS only). Project overview → [README.md](./README.md); release flow → [deploy.md](./deploy.md).
+Bun single-file executable CLI template (macOS only). Project overview → [README.md](./README.md); release flow → [deploy.md](./deploy.md); doc authoring → [llm-doc-style.md](./llm-doc-style.md).
 
 ## Workflow (AI-only)
 

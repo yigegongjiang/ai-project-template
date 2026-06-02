@@ -2,6 +2,18 @@
 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) + [SemVer](https://semver.org/).
 
+## [0.2.3] - 2026-06-02
+
+### Changed
+
+- 跟随版本同步发布
+
+## [0.2.2] - 2026-06-02
+
+### Changed
+
+- 跟随版本同步发布
+
 ## [0.2.1] - 2026-05-17
 
 ### Changed
@@ -24,6 +36,8 @@
 - `install.sh` 一键安装
 - 自动发布, 产物附 SHA256 校验和
 
+[0.2.3]: https://github.com/yigegongjiang/cli-template/compare/v0.2.2...v0.2.3
+[0.2.2]: https://github.com/yigegongjiang/cli-template/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/yigegongjiang/cli-template/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/yigegongjiang/cli-template/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/yigegongjiang/cli-template/releases/tag/v0.1.0

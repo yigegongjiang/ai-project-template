@@ -2,6 +2,20 @@
 
 面向开发者，镜像 [CHANGELOG.md](./CHANGELOG.md) 每条变更并补技术细节。规则见 [llm-doc-style.md](./llm-doc-style.md)。
 
+## [0.2.3] - 2026-06-02
+
+### Changed
+
+- 跟随版本同步发布
+  - 文档规范借鉴 elepay 范本: llm-doc-style 中英重写 (补「代码块」段 + 通用风格 3 条), 清除 setup.md/wrangler/Shiki/子项目等母模板残留, 硬约束改按需; deploy.zh 补 CHANGELOG 双文件镜像步骤; AGENTS 首段补 llm-doc-style link
+
+## [0.2.2] - 2026-06-02
+
+### Changed
+
+- 跟随版本同步发布
+  - 建立 AGENTS/README/deploy/llm-doc-style 文档分层 + 中文版 .zh.md + CHANGELOG 双文件机制 (用户向 + 开发向); CLAUDE.md 改为软链 AGENTS.md
+
 ## [0.2.1] - 2026-05-17
 
 ### Changed
@@ -31,6 +45,8 @@
 - 自动发布, 产物附 SHA256 校验和
   - `.github/workflows/release.yml`: `v*` tag 触发 → 校验 tag 与 `package.json#version` 一致 → typecheck + build → `sha256sum` 生成 `checksums.txt` → `softprops/action-gh-release` (`generate_release_notes`) 发布 `dist/*`
 
+[0.2.3]: https://github.com/yigegongjiang/cli-template/compare/v0.2.2...v0.2.3
+[0.2.2]: https://github.com/yigegongjiang/cli-template/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/yigegongjiang/cli-template/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/yigegongjiang/cli-template/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/yigegongjiang/cli-template/releases/tag/v0.1.0
