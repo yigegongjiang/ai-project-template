@@ -48,7 +48,7 @@ trap 'rm -rf "$tmpdir"' EXIT
 
 tmp_asset="${tmpdir}/${asset}"
 info "==> Downloading"
-curl -fsSL --retry 3 -o "$tmp_asset" "$asset_url" || err "download failed: $asset_url"
+curl -fL --progress-bar --retry 3 -o "$tmp_asset" "$asset_url" || err "download failed: $asset_url"
 
 # Verify SHA256 if checksums.txt is published with the release.
 if hash_line="$(curl -fsSL --retry 3 "$checksums_url" 2>/dev/null | grep " ${asset}$" || true)"; then

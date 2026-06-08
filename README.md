@@ -10,7 +10,13 @@ curl -fsSL https://raw.githubusercontent.com/yigegongjiang/cli-template/main/ins
 
 Installs to `$HOME/.local/bin` by default. Override with `VERSION` / `INSTALL_DIR` / `REPO`.
 
-## Subcommands
+## Usage
+
+Command name = `package.json#name` = repo basename → `cli-template` (rename both to rebrand).
+
+```bash
+cli-template <subcommand>
+```
 
 <!-- prettier-ignore -->
 | Command | Alias | Description |
@@ -19,16 +25,3 @@ Installs to `$HOME/.local/bin` by default. Override with `VERSION` / `INSTALL_DI
 | `version` | `-v` / `--version` | Version |
 | `update` | `upgrade` | Self-update (compiled binary only) |
 | `uninstall` | — | Uninstall (compiled binary only) |
-
-## Development
-
-```bash
-bun install
-bun run start          # run from source
-bun run build          # compile x64 + arm64 → dist/
-bun run typecheck
-```
-
-## Release
-
-Pushing a `v*` tag triggers `.github/workflows/release.yml`. Steps → [deploy.md](./deploy.md).

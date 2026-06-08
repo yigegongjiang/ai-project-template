@@ -5,13 +5,19 @@ import pkg from "./package.json" with { type: "json" };
 const TARGETS = ["bun-darwin-x64", "bun-darwin-arm64"] as const;
 
 async function cleanLeftovers(): Promise<void> {
-  // `bun build --compile` leaves `.<hash>-<index>.bun-build` intermediates in cwd.
-  const entries = await readdir(".");
-  await Promise.all(
-    entries
+  // `bun build --compile` leaves `.<hash>-<index>.bun-build` intermediates in cwd, plus
+  // a redundant `*.js.map` in dist/ — the runtime sourcemap is embedded into the binary,
+  // so the standalone .map is never shipped (install.sh only fetches the executable).
+  const root = await readdir(".");
+  const dist = await readdir("./dist").catch(() => [] as string[]);
+  await Promise.all([
+    ...root
       .filter((n) => n.endsWith(".bun-build"))
       .map((n) => unlink(n).catch(() => {})),
-  );
+    ...dist
+      .filter((n) => n.endsWith(".map"))
+      .map((n) => unlink(`./dist/${n}`).catch(() => {})),
+  ]);
 }
 
 try {

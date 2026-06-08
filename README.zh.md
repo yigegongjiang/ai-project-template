@@ -10,7 +10,13 @@ curl -fsSL https://raw.githubusercontent.com/yigegongjiang/cli-template/main/ins
 
 默认装到 `$HOME/.local/bin`. 可用 `VERSION` / `INSTALL_DIR` / `REPO` 覆写.
 
-## 子命令
+## 用法
+
+命令名 = `package.json#name` = repo basename → `cli-template` (改名时两处一起改).
+
+```bash
+cli-template <子命令>
+```
 
 <!-- prettier-ignore -->
 | 命令 | 别名 | 说明 |
@@ -19,16 +25,3 @@ curl -fsSL https://raw.githubusercontent.com/yigegongjiang/cli-template/main/ins
 | `version` | `-v` / `--version` | 版本 |
 | `update` | `upgrade` | 自更新 (仅编译后二进制) |
 | `uninstall` | — | 卸载 (仅编译后二进制) |
-
-## 开发
-
-```bash
-bun install
-bun run start          # 源码运行
-bun run build          # 编译 x64 + arm64 → dist/
-bun run typecheck
-```
-
-## 发布
-
-推 `v*` tag 触发 `.github/workflows/release.yml`. 步骤 → [deploy.md](./deploy.md).

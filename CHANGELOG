@@ -2,6 +2,15 @@
 
 面向开发者，镜像 [CHANGELOG.md](./CHANGELOG.md) 每条变更并补技术细节。规则见 [llm-doc-style.md](./llm-doc-style.md)。
 
+## [0.2.4] - 2026-06-08
+
+### Changed
+
+- README 精简: 补可执行命令名说明, 移除 Development/Release 章节
+  - README + README.zh.md 同步: 新增 `## Usage`/`## 用法` 段点明命令名 = `package.json#name` = repo basename = `cli-template` (install.sh `BIN_NAME=${REPO##*/}` 约定, 装入 `~/.local/bin/`); 删除面向人的 Development/Release 章节, dev/release 流程由 `package.json` scripts + `deploy.md` 承载
+- 构建清理 dist/ 多余 sourcemap (`*.js.map`), 运行时堆栈仍内嵌二进制
+  - `build.ts` `cleanLeftovers()` 增扫 `./dist` 删 `*.map`: `--compile` 下 sourcemap 非 none 时 map 既 zstd 内嵌二进制 (运行时堆栈) 又外吐 `index.js.map` (install.sh 不分发, 纯残留); sourcemap 保持 `linked` (Bun 官方 `--compile --minify --sourcemap` 推荐, inline 在 compile 下等价)
+
 ## [0.2.3] - 2026-06-02
 
 ### Changed
@@ -45,6 +54,7 @@
 - 自动发布, 产物附 SHA256 校验和
   - `.github/workflows/release.yml`: `v*` tag 触发 → 校验 tag 与 `package.json#version` 一致 → typecheck + build → `sha256sum` 生成 `checksums.txt` → `softprops/action-gh-release` (`generate_release_notes`) 发布 `dist/*`
 
+[0.2.4]: https://github.com/yigegongjiang/cli-template/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/yigegongjiang/cli-template/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/yigegongjiang/cli-template/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/yigegongjiang/cli-template/compare/v0.2.0...v0.2.1
