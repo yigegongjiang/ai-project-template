@@ -8,7 +8,7 @@ Bun 单文件可执行 CLI 模板 (仅 macOS). 打 tag → Actions 自动构建 
 curl -fsSL https://raw.githubusercontent.com/yigegongjiang/cli-template/main/install.sh | bash
 ```
 
-默认装到 `$HOME/.local/bin`. 可用 `VERSION` / `INSTALL_DIR` / `REPO` 覆写.
+装到 `$HOME/.local/bin`.
 
 ## 用法
 

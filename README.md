@@ -8,7 +8,7 @@ Bun single-file executable CLI template (macOS only). Push a tag → Actions aut
 curl -fsSL https://raw.githubusercontent.com/yigegongjiang/cli-template/main/install.sh | bash
 ```
 
-Installs to `$HOME/.local/bin` by default. Override with `VERSION` / `INSTALL_DIR` / `REPO`.
+Installs to `$HOME/.local/bin`.
 
 ## Usage
 

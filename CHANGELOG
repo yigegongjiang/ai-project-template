@@ -2,6 +2,23 @@
 
 面向开发者，镜像 [CHANGELOG.md](./CHANGELOG.md) 每条变更并补技术细节。规则见 [llm-doc-style.md](./llm-doc-style.md)。
 
+## [0.3.0] - 2026-06-10
+
+### Removed
+
+- `install.sh` 不再支持 `REPO` / `VERSION` / `INSTALL_DIR` / `BIN_NAME` 环境变量覆写
+  - 全部硬编码为常量 (REPO = `yigegongjiang/cli-template`, INSTALL_DIR = `$HOME/.local/bin`, BIN_NAME = REPO basename); 同步删 `x86_64|amd64` / `aarch64|arm64` 的 alias 兼容 (macOS 上 `uname -m` 实际只产 `x86_64` / `arm64` 二选一)
+- `update` 子命令的下载进度条
+  - 删除 `src/download.ts` (`downloadWithProgress` + `formatBytes` + `renderBar` + TTY/节流逻辑); update 改用 `fetch().arrayBuffer()` 一次性读入, 取消下载前 `before:` / 完成后 `Bun.spawnSync version` 取 `after:` 的对比输出
+
+### Changed
+
+- 砍掉 `BUILD_NAME` / `BUILD_VERSION` / `BUILD_REPO` 编译期 define 注入, 改为运行时直接读 `package.json`
+  - `src/index.ts` 删 `declare const BUILD_*` + `typeof BUILD_xxx === "string"` fallback; `pkg.name` / `pkg.version` / `pkg.repository` 在 `bun build --compile` 时随 `import ... with { type: "json" }` 一并嵌入产物, 等价但少一层间接
+  - `build.ts` 移除 `define: { BUILD_*: JSON.stringify(...) }` 配置
+- 构建产物不再生成外部 sourcemap
+  - `build.ts` 删 `sourcemap: "linked"`; `bun build --compile` 默认行为下运行时堆栈足够定位, 同步删除 `cleanLeftovers()` 中 `./dist/*.map` 清理逻辑 (源头不再产出)
+
 ## [0.2.4] - 2026-06-08
 
 ### Changed
@@ -54,6 +71,7 @@
 - 自动发布, 产物附 SHA256 校验和
   - `.github/workflows/release.yml`: `v*` tag 触发 → 校验 tag 与 `package.json#version` 一致 → typecheck + build → `sha256sum` 生成 `checksums.txt` → `softprops/action-gh-release` (`generate_release_notes`) 发布 `dist/*`
 
+[0.3.0]: https://github.com/yigegongjiang/cli-template/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/yigegongjiang/cli-template/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/yigegongjiang/cli-template/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/yigegongjiang/cli-template/compare/v0.2.1...v0.2.2
