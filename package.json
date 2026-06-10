@@ -1,6 +1,6 @@
 {
   "name": "cli-template",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Bun standalone executable CLI template",
   "type": "module",
   "private": true,

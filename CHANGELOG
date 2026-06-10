@@ -2,6 +2,13 @@
 
 面向开发者，镜像 [CHANGELOG.md](./CHANGELOG.md) 每条变更并补技术细节。规则见 [llm-doc-style.md](./llm-doc-style.md)。
 
+## [0.3.1] - 2026-06-10
+
+### Changed
+
+- `update` / `upgrade` 完成后打印更新前后的版本号
+  - `src/index.ts` 新增 `readVersion(bin)` 用 `Bun.spawn([bin, "version"])` 读新二进制版本号 (异常/非 0 退出码返回 `null`); update 起始提示改 `==> Updating cli-template 0.3.0 -> latest`, 替换完成后输出两行 `==> Updated cli-template 0.3.0 -> 0.3.1` + 缩进路径; spawn 失败降级 `-> unknown` 不影响已成功替换的产物
+
 ## [0.3.0] - 2026-06-10
 
 ### Removed
@@ -71,6 +78,7 @@
 - 自动发布, 产物附 SHA256 校验和
   - `.github/workflows/release.yml`: `v*` tag 触发 → 校验 tag 与 `package.json#version` 一致 → typecheck + build → `sha256sum` 生成 `checksums.txt` → `softprops/action-gh-release` (`generate_release_notes`) 发布 `dist/*`
 
+[0.3.1]: https://github.com/yigegongjiang/cli-template/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/yigegongjiang/cli-template/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/yigegongjiang/cli-template/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/yigegongjiang/cli-template/compare/v0.2.2...v0.2.3
