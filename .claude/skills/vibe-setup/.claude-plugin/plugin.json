@@ -1,0 +1,9 @@
+{
+  "name": "vibe-setup",
+  "description": "Initialize AI-only (Vibe Coding) project documentation — AGENTS.md, README.md, workflow.md, CHANGELOG",
+  "version": "1.0.0",
+  "author": {
+    "name": "yigegongjiang"
+  },
+  "repository": "https://github.com/yigegongjiang/ai-project-template"
+}
