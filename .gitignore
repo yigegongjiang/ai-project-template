@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Intermediate runtime copy left by `bun build --compile`
+*.bun-build
+.*.bun-build
+
+# Logs
+*.log
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Env
+.env
+.env.local
+
+# web example (Cloudflare React Router) generated artifacts
+web/build/
+web/.react-router/
+web/.wrangler/
+web/worker-configuration.d.ts
+
+.*.mcp.json

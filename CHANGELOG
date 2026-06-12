@@ -1,0 +1,18 @@
+# Changelog (developer)
+
+面向开发者，镜像 [CHANGELOG.md](./CHANGELOG.md) 每条变更并补技术细节。规则见 [llm-doc-style.md](./llm-doc-style.md)。
+
+## [0.3.2] - 2026-06-12
+
+### Added
+
+- 工程初始版本: Bun 单文件可执行 CLI 模板 (仅 macOS)
+  - `src/index.ts` 运行时读 `package.json` 的 `name` / `version` / `repository` (经 `import ... with { type: "json" }` 在 `bun build --compile` 时嵌入产物); `build.ts` `Bun.build({ compile })` 交叉编译 `darwin-x64` / `darwin-arm64`, `minify`, 无外部 sourcemap, finally 清理 cwd 残留的 `*.bun-build` 中间产物
+- 子命令 `help` / `version` / `update` / `uninstall`, 无参数打印 `Hello, world!`
+  - `main()` switch 路由各子命令; `update()` = `fetch().arrayBuffer()` 下载产物 + best-effort SHA256 比对 `checksums.txt` + 同盘 tmp `rename` 原子替换 + `chmod 0o755`, 完成后用 `readVersion(dest)` (`Bun.spawn([bin, "version"])`) 打印更新前后版本; `uninstall()` `unlink(process.execPath)`; 两者经 `assertInstalled()` (`basename(process.execPath) !== NAME`) 守卫拒绝源码 (bun run) 运行时执行
+- `install.sh` 一键安装到 `$HOME/.local/bin`
+  - 硬编码 `REPO` / `INSTALL_DIR` / `BIN_NAME` (= `${REPO##*/}`); 检测 OS+arch (仅 darwin, arm64/x64) → 下载产物 → `shasum -a 256` 比对 `checksums.txt` → `mktemp` + `trap` 清理 → `chmod +x` + `mv -f` 装入; PATH 缺失则提示
+- 打 `v*` tag 触发 Actions 自动构建发布 (macOS x64 / arm64), 产物附 SHA256 校验和
+  - `.github/workflows/release.yml`: 校验 tag 与 `package.json#version` 一致 → `bun install --frozen-lockfile` → typecheck + build → `sha256sum` 生成 `checksums.txt` → `softprops/action-gh-release` (`generate_release_notes`) 发布 `dist/*`
+
+[0.3.2]: https://github.com/yigegongjiang/ai-project-template/releases/tag/v0.3.2
